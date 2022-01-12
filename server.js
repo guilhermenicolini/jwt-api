@@ -42,9 +42,8 @@ app.post('/login', async (req, res) => {
   }
 
   const user = await db.collection('users').findOne({ email: req.body.email, password: req.body.password })
-  console.log(user)
   if (!user) {
-    return res.status(400).send()
+    return res.status(401).send()
   }
   res.send({
     accessToken: jwt.sign({ sub: user._id, email: user.email }, secret)
